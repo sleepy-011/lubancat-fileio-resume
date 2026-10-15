@@ -1,0 +1,23 @@
+LOCAL VERIFICATION: Windows host; no Linux execution claimed.
+PASS Python syntax: scripts/capture_evidence.py
+PASS Python syntax: scripts/deepseek_workflow.py
+PASS Python syntax: scripts/demo_resume.py
+PASS Python syntax: scripts/package.py
+PASS Python syntax: scripts/package_submission.py
+PASS Python syntax: tests/test_cli.py
+PASS ELF architecture fault_io-aarch64-gnu.so: 183 SHA256=3b639a7aef31110444b4739d0b0467121afd9feb809d44d8886c0aa16f78cb01
+PASS ELF architecture fault_io-x86_64-musl.so: 62 SHA256=833ae6628688f8235de8ea75b59126f29d2536ce35eca2b7da3a7b56a0e2f8b5
+PASS ELF architecture sparse-dl-aarch64-gnu: 183 SHA256=f78fafddf846495fb59300e350b4cc1883c64c1f8693a132cfdb8c7ac16e5069
+PASS ELF architecture sparse-dl-aarch64-musl: 183 SHA256=7adf88495c2b05faa55bd516da7f3341e8b9cacf83f5ea55b962cc5c431073cc
+PASS ELF architecture sparse-dl-v1-x86_64-musl: 62 SHA256=b962aa09dcedfdf590fdc02f1e3ec4ca05681500db495c23224c522177061d0b
+PASS ELF architecture sparse-dl-x86_64-musl: 62 SHA256=e96e514b0fa8d40acc81d11b0bce601b6f70fd11d831c0628ff24ba28d98602c
+PASS final C source matches fixed-source cross-build evidence: cfb0c80b73b0dff620ff79a9c3d91881088acdbacf25d973e96699e44c6fdb21
+PASS review patch is the exact initial-to-final source diff
+PASS 16 Linux integration test methods present (NOT EXECUTED)
+PASS project source and shell text uses Linux LF newlines
+PASS Bash syntax: scripts/board_verify.sh (bash -n, exit 0)
+PENDING: Linux runtime tests, physical board screenshots, actual DeepSeek responses.
+UPDATE 2026-10-15: User requested GPT usage records. Actual GPT/Codex prompts, adoption decisions and review evidence are documented in docs/gpt-usage-record.md. DeepSeek calls are optional, not executed, and no longer a current delivery requirement. Linux runtime tests and physical board screenshots remain pending.
+PASS: Updated documentation links resolve; final C source hash unchanged.
+UPDATE 2026-10-16: Actual LubanCat native build and all 16 tests passed, zero skips. SIGINT checkpoint/resume offset 4096; final verification 1048576 bytes. Initial defects reproduced: seven failed assertions/subtests and one timeout error across four test methods. Four native X11 window screenshots visually reviewed; all four local PNG hashes match the authenticated board. No board passwords are included in project artifacts.
+FINAL UPDATE 2026-10-16: Release source archive extracted on actual board, rebuilt with make, and passed 128KiB create/resume/verify. All packaged core source/script/Makefile hashes match the native rebuild. Full submission manifest and four native screenshot hashes validated; no credentials or demo binaries included.

@@ -1,0 +1,76 @@
+{
+  "captured_date_local": "2026-10-16",
+  "timezone": "Asia/Shanghai",
+  "host": "192.168.137.19",
+  "identity_verified": true,
+  "device": {
+    "uname": {
+      "system": "Linux",
+      "node": "lubancat",
+      "release": "4.19.232",
+      "version": "#25 SMP Sat Apr 18 14:08:18 CST 2026",
+      "machine": "aarch64",
+      "processor": "aarch64"
+    },
+    "home": "/home/cat",
+    "user": "cat",
+    "python": "3.8.10 (default, Mar 18 2025, 20:04:55) \n[GCC 9.4.0]",
+    "model": "EmbedFire LubanCat-1",
+    "tools": {
+      "cc": "/usr/bin/cc",
+      "gcc": "/usr/bin/gcc",
+      "make": "/usr/bin/make",
+      "python3": "/usr/bin/python3",
+      "scrot": null,
+      "gnome-screenshot": null,
+      "xfce4-terminal": "/usr/bin/xfce4-terminal",
+      "gnome-terminal": "/usr/bin/gnome-terminal",
+      "xterm": "/usr/bin/xterm",
+      "Xvfb": null,
+      "wmctrl": null,
+      "xdotool": null,
+      "xwininfo": "/usr/bin/xwininfo",
+      "xrandr": "/usr/bin/xrandr"
+    },
+    "x_sockets": [
+      "/tmp/.X11-unix/X0"
+    ]
+  },
+  "project_path": "/home/cat/fileio-coursework-7pyx029_/sparse-downloader",
+  "tests": {
+    "run": 16,
+    "passed": 16,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 2.438
+  },
+  "board_verify_result": "PASS",
+  "interrupted_offset": 4096,
+  "resumed_from": 4096,
+  "verified_bytes": 1048576,
+  "final_source_sha256": "cfb0c80b73b0dff620ff79a9c3d91881088acdbacf25d973e96699e44c6fdb21",
+  "baseline": {
+    "run": 16,
+    "failed_assertions_or_subtests": 7,
+    "errors": 1,
+    "affected_test_methods": 4,
+    "defect_categories": 4,
+    "unaffected_test_methods": 12,
+    "elapsed_seconds": 4.275,
+    "exit_code": 1
+  },
+  "screenshots": {
+    "count": 4,
+    "native_window_pixels": true,
+    "visually_reviewed": true,
+    "remote_sha256_matches_local": true,
+    "sha256": {
+      "board-20261016-01-environment-tests.png": "09ace78c855af7df951339b6909777cae8746c4970bf7ab904426bc6eb4cc10d",
+      "board-20261016-02-sparse-write.png": "663b59d822f567aa21751b0419efb8a059aafeb03a3d42722f9bbe37863f7acf",
+      "board-20261016-03-interrupt-checkpoint.png": "8e0c0d3ee4b537629e094bed7fbb335822a87557b257b6d24f2e6820fe1a9f8b",
+      "board-20261016-04-resume-verified.png": "3e16b543afb1403f6a6e43476264130989fbac5e1fa85a7a942eaa8a4d93e956"
+    },
+    "capture_metadata": "board-20261016-screenshots.json"
+  }
+}

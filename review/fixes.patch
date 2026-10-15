@@ -1,0 +1,144 @@
+--- review/v1/sparse_dl.c
++++ src/sparse_dl.c
+@@ -95,7 +95,8 @@
+ 
+ static int open_target(const char *path, int flags, struct stat *st, int exclusive)
+ {
+-    int fd = open(path, flags | O_CLOEXEC | O_NOFOLLOW);
++    /* Do not block on a FIFO before fstat can reject non-regular files. */
++    int fd = open(path, flags | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK);
+     if (fd < 0)
+         fail("open target");
+     if (flock(fd, (exclusive ? LOCK_EX : LOCK_SH) | LOCK_NB) < 0)
+@@ -104,7 +105,24 @@
+         fail("fstat target");
+     if (!S_ISREG(st->st_mode) || st->st_size < 0)
+         die("target must be a regular file");
++    if (exclusive && st->st_nlink != 1)
++        die("modifying a target with hard-link aliases is not supported");
+     return fd;
++}
++
++static uint64_t state_integer(const char **cursor, char separator)
++{
++    const char *start = *cursor;
++    char *end;
++    unsigned long long value;
++    if (*start < '0' || *start > '9')
++        die("invalid state integer");
++    errno = 0;
++    value = strtoull(start, &end, 10);
++    if (errno || *end != separator)
++        die("invalid or overflowing state integer");
++    *cursor = end + 1;
++    return (uint64_t)value;
+ }
+ 
+ static void sync_parent(const char *path)
+@@ -139,7 +157,7 @@
+     char buffer[256];
+     size_t used = 0;
+     uint64_t dev, ino, size, done;
+-    int consumed = -1;
++    const char *cursor;
+     int fd = open(state, O_RDONLY | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK);
+     struct stat ss;
+     *exists = 0;
+@@ -168,15 +186,47 @@
+     if (close(fd) < 0)
+         fail("close state");
+     buffer[used] = '\0';
+-    /* %n plus exact length rejects trailing garbage, NULs, and truncated files. */
+-    if (sscanf(buffer, "SPARSE_DL_V1 %" SCNu64 " %" SCNu64 " %" SCNu64
+-               " %" SCNu64 "\n%n", &dev, &ino, &size, &done, &consumed) != 4 ||
+-        consumed < 0 || (size_t)consumed != used || done > size ||
++    if (used < sizeof "SPARSE_DL_V1 " - 1U ||
++        memcmp(buffer, "SPARSE_DL_V1 ", sizeof "SPARSE_DL_V1 " - 1U) != 0)
++        die("invalid state header");
++    cursor = buffer + sizeof "SPARSE_DL_V1 " - 1U;
++    dev = state_integer(&cursor, ' ');
++    ino = state_integer(&cursor, ' ');
++    size = state_integer(&cursor, ' ');
++    done = state_integer(&cursor, '\n');
++    if ((size_t)(cursor - buffer) != used || done > size ||
+         dev != (uint64_t)st->st_dev || ino != (uint64_t)st->st_ino ||
+         size != (uint64_t)st->st_size)
+         die("invalid state or state belongs to a different target");
+     *exists = 1;
+     return done;
++}
++
++static void check_prefix(int fd, uint64_t length)
++{
++    unsigned char buffer[BUFFER_SIZE];
++    uint64_t position = 0;
++    seek_to(fd, 0);
++    while (position < length) {
++        uint64_t left = length - position;
++        size_t want = left < BUFFER_SIZE ? (size_t)left : BUFFER_SIZE;
++        ssize_t n = read(fd, buffer, want);
++        if (n < 0) {
++            if (errno == EINTR)
++                continue;
++            fail("read verify");
++        }
++        if (!n)
++            die("unexpected EOF while checking downloaded data");
++        for (size_t i = 0; i < (size_t)n; ++i) {
++            if (buffer[i] != (unsigned char)(1U + (position + (uint64_t)i) % 251U)) {
++                fprintf(stderr, "error: content mismatch at offset=%" PRIu64 "\n",
++                        position + (uint64_t)i);
++                exit(EXIT_FAILURE);
++            }
++        }
++        position += (uint64_t)n;
++    }
+ }
+ 
+ static void save_state(const char *state, const struct stat *st, uint64_t done)
+@@ -294,6 +344,7 @@
+         sigaction(SIGTERM, &action, NULL) < 0)
+         fail("sigaction");
+     setvbuf(stdout, NULL, _IOLBF, 0);
++    check_prefix(fd, done);
+     if (!exists)
+         save_state(state, &st, 0);
+     printf("resume_from=%" PRIu64 "\n", done);
+@@ -324,33 +375,15 @@
+ 
+ static void verify_target(const char *path)
+ {
+-    unsigned char buffer[BUFFER_SIZE];
+     struct stat st;
+-    uint64_t position = 0;
+     int fd = open_target(path, O_RDONLY, &st, 0);
+-    for (;;) {
+-        ssize_t n = read(fd, buffer, sizeof buffer);
+-        if (n < 0) {
+-            if (errno == EINTR)
+-                continue;
+-            fail("read verify");
+-        }
+-        if (!n)
+-            break;
+-        for (size_t i = 0; i < (size_t)n; ++i) {
+-            if (buffer[i] != (unsigned char)(1U + (position + (uint64_t)i) % 251U)) {
+-                fprintf(stderr, "error: content mismatch at offset=%" PRIu64 "\n",
+-                        position + (uint64_t)i);
+-                exit(EXIT_FAILURE);
+-            }
+-        }
+-        position += (uint64_t)n;
+-    }
+-    if (position != (uint64_t)st.st_size || position < MIN_SIZE)
++    uint64_t size = (uint64_t)st.st_size;
++    if (size < MIN_SIZE)
+         die("unexpected target length");
++    check_prefix(fd, size);
+     if (close(fd) < 0)
+         fail("close target");
+-    printf("verified_bytes=%" PRIu64 "\nresult=verified\n", position);
++    printf("verified_bytes=%" PRIu64 "\nresult=verified\n", size);
+ }
+ 
+ static void usage(const char *program)

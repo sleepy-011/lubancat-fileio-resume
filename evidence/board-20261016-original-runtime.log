@@ -1,0 +1,141 @@
+Capture kind: actual command output, not a native terminal screenshot
+UTC time: 2026-10-15T17:18:58Z
+
+== Kernel / architecture ==
+Linux lubancat 4.19.232 #25 SMP Sat Apr 18 14:08:18 CST 2026 aarch64 aarch64 aarch64 GNU/Linux
+
+== Operating system ==
+NAME="Ubuntu"
+VERSION="20.04.6 LTS (Focal Fossa)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 20.04.6 LTS"
+VERSION_ID="20.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=focal
+UBUNTU_CODENAME=focal
+BUILD_INFO="root@dev120.embedfire.local Sat Apr 18 14:55:41 CST 2026"
+
+== Filesystem ==
+Filesystem     Type 1K-blocks    Used Available Use% Mounted on
+/dev/mmcblk1p3 ext4  30474056 3618416  25564728  13% /
+
+== Compiler ==
+cc (Ubuntu 9.4.0-1ubuntu1~20.04.3) 9.4.0
+Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+== Build and regression tests ==
+rm -f sparse-dl
+cc  -O2 -g -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror src/sparse_dl.c  -o sparse-dl
+python3 tests/test_cli.py ./sparse-dl
+test_corrupted_and_noncanonical_states_are_rejected (__main__.IntegrationTests) ... ok
+test_create_is_sparse_and_status_matches_stat (__main__.IntegrationTests) ... ok
+test_create_refuses_small_existing_or_orphan_state (__main__.IntegrationTests) ... ok
+test_existing_lock_blocks_read_and_write_commands (__main__.IntegrationTests) ... ok
+test_fifo_and_symlink_are_rejected_without_hanging (__main__.IntegrationTests) ... ok
+test_hardlink_alias_cannot_modify_managed_data (__main__.IntegrationTests) ... ok
+test_invalid_arguments_and_ranges_do_not_mutate_target (__main__.IntegrationTests) ... ok
+test_positioned_write_leaves_all_other_bytes_zero (__main__.IntegrationTests) ... ok
+test_resume_and_verify_non_chunk_multiple (__main__.IntegrationTests) ... ok
+test_resume_rejects_corrupted_prefix_or_forged_progress (__main__.IntegrationTests) ... ok
+test_short_write_and_eintr_are_retried (__main__.IntegrationTests) ... ok
+test_sigint_checkpoints_and_resumes_in_real_process (__main__.IntegrationTests) ... ok
+test_state_from_replaced_target_is_rejected (__main__.IntegrationTests) ... ok
+test_verify_detects_actual_content_corruption (__main__.IntegrationTests) ... ok
+test_write_failure_preserves_checkpoint_and_can_restart (__main__.IntegrationTests) ... ok
+test_zero_write_fails_without_infinite_loop (__main__.IntegrationTests) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 2.438s
+
+OK
+
+== File IO demonstration ==
+created=/home/cat/fileio-coursework-7pyx029_/sparse-downloader/evidence/demo-20261015T171858Z.dJa9b3/sample.bin
+logical_bytes=1048576
+logical_bytes=1048576
+allocated_blocks_512=0
+allocated_bytes=0
+space_percent=0.000
+state_exists=0
+completed_offset=0
+progress_percent=0.000
+written_offset=65536
+written_bytes=12
+logical_bytes=1048576
+allocated_blocks_512=8
+allocated_bytes=4096
+space_percent=0.391
+state_exists=0
+completed_offset=0
+progress_percent=0.000
+
+== Actual SIGINT and resume demonstration ==
+$ /home/cat/fileio-coursework-7pyx029_/sparse-downloader/sparse-dl create /home/cat/fileio-coursework-7pyx029_/sparse-downloader/evidence/resume-demo-ebag4qsl/download.bin 1048576
+created=/home/cat/fileio-coursework-7pyx029_/sparse-downloader/evidence/resume-demo-ebag4qsl/download.bin
+logical_bytes=1048576
+exit_code=0
+$ /home/cat/fileio-coursework-7pyx029_/sparse-downloader/sparse-dl resume /home/cat/fileio-coursework-7pyx029_/sparse-downloader/evidence/resume-demo-ebag4qsl/download.bin 4096 100
+Sending SIGINT after observing an actual committed checkpoint
+resume_from=0
+completed_offset=4096
+result=interrupted
+exit_code=130
+Actual saved checkpoint: SPARSE_DL_V1 45827 260876 1048576 4096
+$ /home/cat/fileio-coursework-7pyx029_/sparse-downloader/sparse-dl status /home/cat/fileio-coursework-7pyx029_/sparse-downloader/evidence/resume-demo-ebag4qsl/download.bin
+logical_bytes=1048576
+allocated_blocks_512=8
+allocated_bytes=4096
+space_percent=0.391
+state_exists=1
+completed_offset=4096
+progress_percent=0.391
+exit_code=0
+$ /home/cat/fileio-coursework-7pyx029_/sparse-downloader/sparse-dl resume /home/cat/fileio-coursework-7pyx029_/sparse-downloader/evidence/resume-demo-ebag4qsl/download.bin 65536 0
+resume_from=4096
+completed_offset=69632
+completed_offset=135168
+completed_offset=200704
+completed_offset=266240
+completed_offset=331776
+completed_offset=397312
+completed_offset=462848
+completed_offset=528384
+completed_offset=593920
+completed_offset=659456
+completed_offset=724992
+completed_offset=790528
+completed_offset=856064
+completed_offset=921600
+completed_offset=987136
+completed_offset=1048576
+result=complete
+exit_code=0
+$ /home/cat/fileio-coursework-7pyx029_/sparse-downloader/sparse-dl verify /home/cat/fileio-coursework-7pyx029_/sparse-downloader/evidence/resume-demo-ebag4qsl/download.bin
+verified_bytes=1048576
+result=verified
+exit_code=0
+$ /home/cat/fileio-coursework-7pyx029_/sparse-downloader/sparse-dl status /home/cat/fileio-coursework-7pyx029_/sparse-downloader/evidence/resume-demo-ebag4qsl/download.bin
+logical_bytes=1048576
+allocated_blocks_512=2048
+allocated_bytes=1048576
+space_percent=100.000
+state_exists=1
+completed_offset=1048576
+progress_percent=100.000
+exit_code=0
+RESUME_DEMO_RESULT=PASS
+Demonstration artifacts retained at /home/cat/fileio-coursework-7pyx029_/sparse-downloader/evidence/resume-demo-ebag4qsl
+
+== Source checksums ==
+cfb0c80b73b0dff620ff79a9c3d91881088acdbacf25d973e96699e44c6fdb21  src/sparse_dl.c
+5c628da0c56a7c670e8ac4300c36999dee85c0e00bb3439aedce9a15fc29f199  Makefile
+a1c5d4bc346e768f4e8b75dcf2fb45caebebf47397ed970eab52f55f327b924a  tests/test_cli.py
+
+BOARD_VERIFY_RESULT=PASS

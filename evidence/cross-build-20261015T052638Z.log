@@ -1,0 +1,46 @@
+UTC: 20261015T052638Z
+Execution host: Windows; cross compilation only. Linux runtime tests are NOT claimed.
+Compiler source: https://ziglang.org/download/0.14.1/zig-x86_64-windows-0.14.1.zip
+Digest source: https://ziglang.org/download/index.json
+Official SHA256: 554f5378228923ffd558eac35e21af020c73789d87afeabf4bfd16f2e6feed2c
+Downloaded SHA256: 554f5378228923ffd558eac35e21af020c73789d87afeabf4bfd16f2e6feed2c
+Digest verification: PASS
+Compiler version: 0.14.1
+
+Job: fixed-aarch64-musl
+Source SHA256: cfb0c80b73b0dff620ff79a9c3d91881088acdbacf25d973e96699e44c6fdb21
+Command: "C:\Users\31415\Documents\ChatGPT\luban cat1\.build-tools\zig-x86_64-windows-0.14.1\zig.exe" cc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror -O2 -target aarch64-linux-musl src/sparse_dl.c -o build/sparse-dl-aarch64-musl
+Exit code: 0
+Artifact SHA256: 7adf88495c2b05faa55bd516da7f3341e8b9cacf83f5ea55b962cc5c431073cc
+
+Job: fixed-x86_64-musl
+Source SHA256: cfb0c80b73b0dff620ff79a9c3d91881088acdbacf25d973e96699e44c6fdb21
+Command: "C:\Users\31415\Documents\ChatGPT\luban cat1\.build-tools\zig-x86_64-windows-0.14.1\zig.exe" cc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror -O2 -target x86_64-linux-musl src/sparse_dl.c -o build/sparse-dl-x86_64-musl
+Exit code: 0
+Artifact SHA256: e96e514b0fa8d40acc81d11b0bce601b6f70fd11d831c0628ff24ba28d98602c
+
+Job: v1-x86_64-musl
+Source SHA256: e646c5c6a75489399fd282711d31d768a0f5e026075edcba56aaa3caa6dee21f
+Command: "C:\Users\31415\Documents\ChatGPT\luban cat1\.build-tools\zig-x86_64-windows-0.14.1\zig.exe" cc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror -O2 -target x86_64-linux-musl review/v1/sparse_dl.c -o build/sparse-dl-v1-x86_64-musl
+Exit code: 0
+Artifact SHA256: b962aa09dcedfdf590fdc02f1e3ec4ca05681500db495c23224c522177061d0b
+
+Job: fault-x86_64-musl
+Source SHA256: 574554cb50db8042ce1e455d3fec32d8cd21faad4d7c60db4bf4b7b0e50f9b1e
+Command: "C:\Users\31415\Documents\ChatGPT\luban cat1\.build-tools\zig-x86_64-windows-0.14.1\zig.exe" cc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror -O2 -target x86_64-linux-musl -shared -fPIC tests/fault_io.c -ldl -o build/fault_io-x86_64-musl.so
+Exit code: 0
+Artifact SHA256: 833ae6628688f8235de8ea75b59126f29d2536ce35eca2b7da3a7b56a0e2f8b5
+
+Job: fixed-aarch64-gnu
+Source SHA256: cfb0c80b73b0dff620ff79a9c3d91881088acdbacf25d973e96699e44c6fdb21
+Command: "C:\Users\31415\Documents\ChatGPT\luban cat1\.build-tools\zig-x86_64-windows-0.14.1\zig.exe" cc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror -O2 -target aarch64-linux-gnu src/sparse_dl.c -o build/sparse-dl-aarch64-gnu
+Exit code: 0
+Artifact SHA256: f78fafddf846495fb59300e350b4cc1883c64c1f8693a132cfdb8c7ac16e5069
+
+Job: fault-aarch64-gnu
+Source SHA256: 574554cb50db8042ce1e455d3fec32d8cd21faad4d7c60db4bf4b7b0e50f9b1e
+Command: "C:\Users\31415\Documents\ChatGPT\luban cat1\.build-tools\zig-x86_64-windows-0.14.1\zig.exe" cc -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror -O2 -target aarch64-linux-gnu -shared -fPIC tests/fault_io.c -ldl -o build/fault_io-aarch64-gnu.so
+Exit code: 0
+Artifact SHA256: 3b639a7aef31110444b4739d0b0467121afd9feb809d44d8886c0aa16f78cb01
+
+Failed builds: 0

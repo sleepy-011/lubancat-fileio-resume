@@ -1,0 +1,11 @@
+{
+  "verified_at_utc": "2026-10-15T17:32:08.637691+00:00",
+  "method": "Authenticated SSH host key verified; local source and screenshot bytes match hashes independently computed on the actual board.",
+  "source_sha256": "cfb0c80b73b0dff620ff79a9c3d91881088acdbacf25d973e96699e44c6fdb21",
+  "screenshots_sha256": {
+    "board-20261016-01-environment-tests.png": "09ace78c855af7df951339b6909777cae8746c4970bf7ab904426bc6eb4cc10d",
+    "board-20261016-02-sparse-write.png": "663b59d822f567aa21751b0419efb8a059aafeb03a3d42722f9bbe37863f7acf",
+    "board-20261016-03-interrupt-checkpoint.png": "8e0c0d3ee4b537629e094bed7fbb335822a87557b257b6d24f2e6820fe1a9f8b",
+    "board-20261016-04-resume-verified.png": "3e16b543afb1403f6a6e43476264130989fbac5e1fa85a7a942eaa8a4d93e956"
+  }
+}

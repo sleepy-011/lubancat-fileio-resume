@@ -1,0 +1,51 @@
+{
+  "result": "PASS",
+  "source_archive_sha256": "ebb0e736ad63e59b47b7092705c3d540b1f2e74a025d7cf1eb2701c37602b45f",
+  "extracted_project": "/home/cat/fileio-release-check-tbrch8km/sparse-downloader",
+  "build_exit_code": 0,
+  "build_output": "cc  -O2 -g -std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror src/sparse_dl.c  -o sparse-dl\n",
+  "core_file_sha256": {
+    "Makefile": "5c628da0c56a7c670e8ac4300c36999dee85c0e00bb3439aedce9a15fc29f199",
+    "review/v1/sparse_dl.c": "e646c5c6a75489399fd282711d31d768a0f5e026075edcba56aaa3caa6dee21f",
+    "scripts/board_verify.sh": "1c2685a25c1adafb30b9f15d4adff98495006d21aeafc401452986e9d80c8dc4",
+    "scripts/capture_evidence.py": "4ff364c886476f0fd50ad859197e242ecc789dbc9c8264f36d7d568029d5fa17",
+    "scripts/deepseek_workflow.py": "87bdffec70d0e8b9a0366a6d7baeefcab5d37dc45123dc5173afcf8b320066cf",
+    "scripts/demo_resume.py": "a82ce23029ee261f7391d391d6b0e7cf97ab2407b3d4b7bdfa4335a063d690c7",
+    "scripts/package.py": "1f16228132bf901ad6f718af786362a71b22cc9383d975f85e741441c28ea626",
+    "scripts/package_submission.py": "975d855bb726c51976eb8c1c8ba9cfdc56aa77291a4df4908a1573bbf2cdf82d",
+    "src/sparse_dl.c": "cfb0c80b73b0dff620ff79a9c3d91881088acdbacf25d973e96699e44c6fdb21",
+    "tests/fault_io.c": "574554cb50db8042ce1e455d3fec32d8cd21faad4d7c60db4bf4b7b0e50f9b1e",
+    "tests/test_cli.py": "a1c5d4bc346e768f4e8b75dcf2fb45caebebf47397ed970eab52f55f327b924a"
+  },
+  "smoke_tests": [
+    {
+      "command": [
+        "./sparse-dl",
+        "create",
+        "release.bin",
+        "131072"
+      ],
+      "exit_code": 0,
+      "output": "created=release.bin\nlogical_bytes=131072\n"
+    },
+    {
+      "command": [
+        "./sparse-dl",
+        "resume",
+        "release.bin",
+        "65536"
+      ],
+      "exit_code": 0,
+      "output": "resume_from=0\ncompleted_offset=65536\ncompleted_offset=131072\nresult=complete\n"
+    },
+    {
+      "command": [
+        "./sparse-dl",
+        "verify",
+        "release.bin"
+      ],
+      "exit_code": 0,
+      "output": "verified_bytes=131072\nresult=verified\n"
+    }
+  ]
+}

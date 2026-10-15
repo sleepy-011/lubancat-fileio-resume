@@ -1,0 +1,9 @@
+/sparse-dl
+/build/
+/test-output/
+/evidence/
+/dist/
+__pycache__/
+*.o
+*.state
+*.tmp.*

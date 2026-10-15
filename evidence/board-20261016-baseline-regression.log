@@ -1,0 +1,151 @@
+BASELINE_BUILD_EXIT=0
+
+test_corrupted_and_noncanonical_states_are_rejected (__main__.IntegrationTests) ... test_create_is_sparse_and_status_matches_stat (__main__.IntegrationTests) ... ok
+test_create_refuses_small_existing_or_orphan_state (__main__.IntegrationTests) ... ok
+test_existing_lock_blocks_read_and_write_commands (__main__.IntegrationTests) ... ok
+test_fifo_and_symlink_are_rejected_without_hanging (__main__.IntegrationTests) ... ERROR
+test_hardlink_alias_cannot_modify_managed_data (__main__.IntegrationTests) ... FAIL
+test_invalid_arguments_and_ranges_do_not_mutate_target (__main__.IntegrationTests) ... ok
+test_positioned_write_leaves_all_other_bytes_zero (__main__.IntegrationTests) ... ok
+test_resume_and_verify_non_chunk_multiple (__main__.IntegrationTests) ... ok
+test_resume_rejects_corrupted_prefix_or_forged_progress (__main__.IntegrationTests) ... FAIL
+test_short_write_and_eintr_are_retried (__main__.IntegrationTests) ... ok
+test_sigint_checkpoints_and_resumes_in_real_process (__main__.IntegrationTests) ... ok
+test_state_from_replaced_target_is_rejected (__main__.IntegrationTests) ... ok
+test_verify_detects_actual_content_corruption (__main__.IntegrationTests) ... ok
+test_write_failure_preserves_checkpoint_and_can_restart (__main__.IntegrationTests) ... ok
+test_zero_write_fails_without_infinite_loop (__main__.IntegrationTests) ... ok
+
+======================================================================
+ERROR: test_fifo_and_symlink_are_rejected_without_hanging (__main__.IntegrationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 199, in test_fifo_and_symlink_are_rejected_without_hanging
+    self.run_cli(command, self.target, ok=False, timeout=2)
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 35, in run_cli
+    p = subprocess.run([str(BINARY), *map(str, args)], capture_output=True,
+  File "/usr/lib/python3.8/subprocess.py", line 495, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/usr/lib/python3.8/subprocess.py", line 1028, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/usr/lib/python3.8/subprocess.py", line 1869, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/usr/lib/python3.8/subprocess.py", line 1072, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['/home/cat/fileio-coursework-7pyx029_/sparse-downloader/evidence/sparse-dl-v1', 'status', '/tmp/sparse-dl-test-uaywp0g8/target.bin']' timed out after 2 seconds
+
+======================================================================
+FAIL: test_corrupted_and_noncanonical_states_are_rejected (__main__.IntegrationTests) (record=b'SPARSE_DL_V1 35 54829 131072 0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 175, in test_corrupted_and_noncanonical_states_are_rejected
+    self.run_cli("status", self.target, ok=False)
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 40, in run_cli
+    self.assertNotEqual(p.returncode, 0, p.stdout + p.stderr)
+AssertionError: 0 == 0 : logical_bytes=131072
+allocated_blocks_512=0
+allocated_bytes=0
+space_percent=0.000
+state_exists=1
+completed_offset=0
+progress_percent=0.000
+
+
+======================================================================
+FAIL: test_corrupted_and_noncanonical_states_are_rejected (__main__.IntegrationTests) (record=b'SPARSE_DL_V1 +35 54829 131072 0\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 175, in test_corrupted_and_noncanonical_states_are_rejected
+    self.run_cli("status", self.target, ok=False)
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 40, in run_cli
+    self.assertNotEqual(p.returncode, 0, p.stdout + p.stderr)
+AssertionError: 0 == 0 : logical_bytes=131072
+allocated_blocks_512=0
+allocated_bytes=0
+space_percent=0.000
+state_exists=1
+completed_offset=0
+progress_percent=0.000
+
+
+======================================================================
+FAIL: test_corrupted_and_noncanonical_states_are_rejected (__main__.IntegrationTests) (record=b'SPARSE_DL_V1 35 +54829 131072 0\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 175, in test_corrupted_and_noncanonical_states_are_rejected
+    self.run_cli("status", self.target, ok=False)
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 40, in run_cli
+    self.assertNotEqual(p.returncode, 0, p.stdout + p.stderr)
+AssertionError: 0 == 0 : logical_bytes=131072
+allocated_blocks_512=0
+allocated_bytes=0
+space_percent=0.000
+state_exists=1
+completed_offset=0
+progress_percent=0.000
+
+
+======================================================================
+FAIL: test_corrupted_and_noncanonical_states_are_rejected (__main__.IntegrationTests) (record=b'SPARSE_DL_V1 35 54829 +131072 0\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 175, in test_corrupted_and_noncanonical_states_are_rejected
+    self.run_cli("status", self.target, ok=False)
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 40, in run_cli
+    self.assertNotEqual(p.returncode, 0, p.stdout + p.stderr)
+AssertionError: 0 == 0 : logical_bytes=131072
+allocated_blocks_512=0
+allocated_bytes=0
+space_percent=0.000
+state_exists=1
+completed_offset=0
+progress_percent=0.000
+
+
+======================================================================
+FAIL: test_corrupted_and_noncanonical_states_are_rejected (__main__.IntegrationTests) (record=b'SPARSE_DL_V1 35 54829 131072 -0\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 175, in test_corrupted_and_noncanonical_states_are_rejected
+    self.run_cli("status", self.target, ok=False)
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 40, in run_cli
+    self.assertNotEqual(p.returncode, 0, p.stdout + p.stderr)
+AssertionError: 0 == 0 : logical_bytes=131072
+allocated_blocks_512=0
+allocated_bytes=0
+space_percent=0.000
+state_exists=1
+completed_offset=0
+progress_percent=0.000
+
+
+======================================================================
+FAIL: test_hardlink_alias_cannot_modify_managed_data (__main__.IntegrationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 213, in test_hardlink_alias_cannot_modify_managed_data
+    self.run_cli("write", alias, 0, "X", ok=False)
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 40, in run_cli
+    self.assertNotEqual(p.returncode, 0, p.stdout + p.stderr)
+AssertionError: 0 == 0 : written_offset=0
+written_bytes=1
+
+
+======================================================================
+FAIL: test_resume_rejects_corrupted_prefix_or_forged_progress (__main__.IntegrationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 230, in test_resume_rejects_corrupted_prefix_or_forged_progress
+    self.run_cli("resume", self.target, ok=False)
+  File "/home/cat/fileio-coursework-7pyx029_/sparse-downloader/tests/test_cli.py", line 40, in run_cli
+    self.assertNotEqual(p.returncode, 0, p.stdout + p.stderr)
+AssertionError: 0 == 0 : resume_from=131072
+result=complete
+
+
+----------------------------------------------------------------------
+Ran 16 tests in 4.275s
+
+FAILED (failures=7, errors=1)
+
+BASELINE_TEST_EXIT=1
